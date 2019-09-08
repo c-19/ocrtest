@@ -9,6 +9,7 @@
 .idea/
 *.iws
 /out/
+*/out/
 .idea_modules/
 *.iml
 modules.xml

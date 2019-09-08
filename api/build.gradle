@@ -13,6 +13,8 @@ plugins{
 
 dependencies {    
 
+    implementation libs.tesseract
+
     //Test
     //Spock
     testImplementation libs.groovy_all
