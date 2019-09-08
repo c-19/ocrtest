@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2018 - 2019, C19, all rights reserved.
+ *
+ * This software is licensed under under GPL-3.0-only or GPL-3.0-or-later, https://opensource.org/licenses/GPL-3.0
+ */
+
+//-*- coding: utf-8 -*-
+plugins {
+    id 'org.sonarqube' version '2.5'
+}
+
+allprojects{
+    tasks.withType(JavaCompile) { 
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+        options.compilerArgs << "-Xlint:all" << "-Werror"
+      }
+      repositories {
+        mavenCentral()
+  }
+}
+
+subprojects{
+  apply from: "$rootProject.projectDir/versions.gradle"
+}
+
+sonarqube {
+    properties {
+        properties["sonar.host.url"] = 'http://localhost:9000'
+        properties["sonar.verbose"] = "true"
+        properties['sonar.java.source'] = 8
+    }
+}
+
+
