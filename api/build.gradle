@@ -14,6 +14,7 @@ plugins{
 dependencies {    
 
     implementation libs.tesseract
+    implementation libs.commons_io
 
     //Test
     //Spock

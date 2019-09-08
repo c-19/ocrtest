@@ -78,4 +78,23 @@ class OcrTest extends Specification
         "src/test/resources/test01.png" || "Other Platforms"
         "src/test/resources/test02.tif" || "Tesseract is a command-line program,"
     }
+
+    @Unroll
+    def "Process image to text imagestream"()
+    {
+        given:
+        InputStream stream = new FileInputStream( image )
+
+        when:
+        String actual = instance.process( stream )
+
+        then:
+        actual.contains( expected )
+
+        where:
+        image || expected
+        "src/test/resources/test00.png" || "Running Tesseract"
+        "src/test/resources/test01.png" || "Other Platforms"
+        "src/test/resources/test02.tif" || "Tesseract is a command-line program,"
+    }
 }

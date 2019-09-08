@@ -8,6 +8,7 @@
 ext.libs = [
 	javaee_api: 'javax:javaee-api:7.0',
 	tesseract: 'org.bytedeco:tesseract-platform:4.1.0-1.5.1',
+	commons_io: 'commons-io:commons-io:2.6',
 
         // for spock
         groovy_all : 'org.codehaus.groovy:groovy-all:2.4.4+',

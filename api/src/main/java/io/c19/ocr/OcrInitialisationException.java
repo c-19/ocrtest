@@ -9,6 +9,8 @@ package io.c19.ocr;
 public class OcrInitialisationException extends RuntimeException
 {
 
+    private static final long serialVersionUID = -1;
+
     public OcrInitialisationException(String message )
     {
         super( message );

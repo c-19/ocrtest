@@ -6,14 +6,16 @@
 
 package io.c19.ocr;
 
+import org.apache.commons.io.IOUtils;
 import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.leptonica.PIX;
 import org.bytedeco.tesseract.TessBaseAPI;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
-import static org.bytedeco.leptonica.global.lept.pixDestroy;
-import static org.bytedeco.leptonica.global.lept.pixRead;
+import static org.bytedeco.leptonica.global.lept.*;
 
 public class Ocr
 {
@@ -61,10 +63,27 @@ public class Ocr
     public String process( String image )
     {
         Objects.requireNonNull( image, "Image is null." );
-        PIX pix = null;
+        return process( pixRead(image) );
+    }
+
+    public String process( InputStream imageStream )
+    {
+        try
+        {
+            byte[] bytes = IOUtils.toByteArray( imageStream );
+            return process( pixReadMem(bytes, bytes.length) );
+        }
+        catch( IOException e )
+        {
+            throw new RuntimeException( "Error reading inputstream.", e );
+        }
+    }
+
+    public String process( PIX pix )
+    {
         BytePointer outText = null;
         try {
-            pix = pixRead(image);
+
             this.api.SetImage(pix);
             outText = this.api.GetUTF8Text();
             return outText.getString();
@@ -81,6 +100,5 @@ public class Ocr
             }
         }
     }
-
 
 }

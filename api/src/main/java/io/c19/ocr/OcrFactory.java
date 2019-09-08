@@ -6,6 +6,7 @@
 
 package io.c19.ocr;
 
+import java.io.InputStream;
 import java.util.UUID;
 import java.util.concurrent.*;
 
@@ -46,12 +47,36 @@ public class OcrFactory
     {
         OcrParams params = new OcrParams( image );
 
+        return processAsync( params );
+    }
+
+    public Future<String> processAsync( InputStream stream )
+    {
+        OcrParams params = new OcrParams( stream );
+
+        return processAsync( params );
+    }
+
+    private Future<String> processAsync( OcrParams params )
+    {
         images.add( params );
 
         return this.resultRetriever.submit( new OcrResult( params ) );
     }
 
     public String process( String image )
+    {
+        try
+        {
+            return processAsync(image).get();
+        }
+        catch( InterruptedException | ExecutionException e )
+        {
+            throw new RuntimeException( "Error processing", e );
+        }
+    }
+
+    public String process( InputStream image )
     {
         try
         {
@@ -81,8 +106,10 @@ public class OcrFactory
                 while (true) {
                     try {
                         OcrParams params = images.poll();
-                        if (params != null) {
-                            String result = processor.process(params.image);
+                        if (params != null)
+                        {
+
+                            String result = params.isFile() ? processor.process(  params.file) : processor.process( params.image );
                             results.put(params.corrId, result);
                         }
                         Thread.sleep(1);
@@ -136,12 +163,34 @@ public class OcrFactory
     private class OcrParams
     {
         private String corrId;
-        private String image;
+        private InputStream image;
+        private String file;
 
-        private OcrParams( String image )
+        private OcrParams()
         {
-            this.image = image;
             this.corrId = UUID.randomUUID().toString();
+        }
+
+        private OcrParams( String file )
+        {
+            this();
+            this.file = file;
+        }
+
+        private OcrParams( InputStream image )
+        {
+            this();
+            this.image = image;
+        }
+
+        private boolean isFile()
+        {
+            return this.file != null;
+        }
+
+        private Object getImage()
+        {
+            return this.image == null ? file : image;
         }
     }
 
