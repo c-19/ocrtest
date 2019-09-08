@@ -1,0 +1,30 @@
+/*
+ * Copyright (c) 2018 - 2019, C19, all rights reserved.
+ *
+ * This software is licensed under under GPL-3.0-only or GPL-3.0-or-later, https://opensource.org/licenses/GPL-3.0
+ */
+
+//-*- coding: utf-8 -*-
+plugins{
+    id 'ear'
+    id 'java'
+}
+def appVersion = version
+
+dependencies {    
+    compileOnly libs.javaee_api
+    earlib project( ':api' )
+    deploy project( path: ':rest', configuration: 'webArchive' )
+}
+
+ear{
+    deploymentDescriptor{
+        applicationName = "ocr-test-app"
+        displayName = "OCR test App"
+        description = "App to receive ocr data."
+        webModule("rest-${appVersion}.war", "/")
+    }
+    archiveName="ocr-test-app.ear"
+}
+
+

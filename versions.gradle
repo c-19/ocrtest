@@ -10,6 +10,14 @@ ext.libs = [
 	tesseract: 'org.bytedeco:tesseract-platform:4.1.0-1.5.1',
 	commons_io: 'commons-io:commons-io:2.6',
 
+	// test rest
+	rest_jersey_container     : "org.glassfish.jersey.containers:jersey-container-servlet:2.16",
+	rest_jersey_test_core     : "org.glassfish.jersey.test-framework:jersey-test-framework-core:2.16",
+	rest_jersey_test_providers: "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.16",
+	jersey_client             : "org.glassfish.jersey.core:jersey-client:2.9.1",
+	jersey_media_moxy         : "org.glassfish.jersey.media:jersey-media-moxy:2.9.1",
+	json_glassfish            : 'org.glassfish:javax.json:1.1',
+
         // for spock
         groovy_all : 'org.codehaus.groovy:groovy-all:2.4.4+',
         spock_core : 'org.spockframework:spock-core:1.0-groovy-2.4',

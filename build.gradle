@@ -32,4 +32,12 @@ sonarqube {
     }
 }
 
+task dist(type: Copy ) {
+    def folder = "$rootProject.projectDir/docker/files/"
+    from { project(':app').ear } {
+        rename { "ocr-test-app.ear" }
+    }
+    into(folder)
+}
+
 
