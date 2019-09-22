@@ -7,25 +7,24 @@
 package io.c19.ocr.rest;
 
 import io.c19.ocr.OcrConfig;
-import io.c19.ocr.OcrFactory;
+import io.c19.ocr.OcrFactoryV2;
 
 import javax.ejb.Stateless;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import java.io.*;
-import java.util.Base64;
-import java.util.UUID;
+import java.io.InputStream;
 
 @Stateless
 @Path("/")
 public class OcrRestService
 {
-    private static OcrFactory factory;
+    private static OcrFactoryV2 factory;
 
     static
     {
-        factory = new OcrFactory( 16, new OcrConfig() );
+        factory = new OcrFactoryV2( 4, new OcrConfig() );
         factory.start();
     }
 
@@ -44,7 +43,7 @@ public class OcrRestService
 
     @POST
     @Path( "ocr" )
-    public Response play( InputStream data )
+    public Response ocr( InputStream data )
     {
         try
         {

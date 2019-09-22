@@ -11,10 +11,10 @@ import spock.lang.Specification
 
 import java.util.concurrent.Future
 
-class OcrFactoryTest extends Specification
+class OcrFactoryV2Test extends Specification
 {
     @Shared OcrConfig config = new OcrConfig()
-    @Shared OcrFactory instance = new OcrFactory( 4, config )
+    @Shared OcrFactoryV2 instance = new OcrFactoryV2( 4, config )
 
     def setupSpec()
     {
